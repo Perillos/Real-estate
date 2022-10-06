@@ -1,6 +1,9 @@
 // const express = require('express');
 import express from 'express'
+import csrf from 'csrf'
+import cookieParser from 'cookie-parser'
 import userRoutes from './routes/user.routes.js'
+import ownRoutes from './routes/own.routes.js'
 import db from './config/db.js'
 
 // Crar la app
@@ -8,6 +11,9 @@ const app = express()
 
 // Habilitar lectura de datos de formularios
 app.use( express.urlencoded({extended: true}))
+
+// Habilitar Cookie Parser
+app.use(cookieParser())
 
 // Conexión a la base de datos
 try {
@@ -29,6 +35,7 @@ app.use( express.static('public'))
 
 // Routing
 app.use('/auth', userRoutes)
+app.use('/', ownRoutes)
 
 
 // Define el puerto
